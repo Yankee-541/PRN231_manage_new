@@ -55,8 +55,7 @@ namespace DataAccess.DAOs
 
         public async Task<List<UserDTO>> GetAllAsync()
         {
-            return await _dbContext.Users.Select(u =>
-            new UserDTO
+            return await _dbContext.Users.Select(u => new UserDTO
             {
                 Id = u.Id,
                 Name = u.Name,

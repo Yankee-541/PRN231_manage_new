@@ -15,6 +15,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserBusiness, UserBusiness>();
 builder.Services.AddScoped<IUserDAO, UserDAO>();
+builder.Services.AddScoped<INewsBusiness, NewsBusiness>();
+builder.Services.AddScoped<INewsDAO, NewsDAO>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyStoreDB")));

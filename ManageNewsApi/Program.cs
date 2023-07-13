@@ -17,6 +17,8 @@ builder.Services.AddScoped<IUserBusiness, UserBusiness>();
 builder.Services.AddScoped<IUserDAO, UserDAO>();
 builder.Services.AddScoped<INewsBusiness, NewsBusiness>();
 builder.Services.AddScoped<INewsDAO, NewsDAO>();
+builder.Services.AddScoped<ICategoriesDAO, CategoriesDAO>();
+builder.Services.AddScoped<ICategoriesBusiness, CategoriesBusiness>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyStoreDB")));

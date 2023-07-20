@@ -1,4 +1,5 @@
-﻿using BusinessLogic.DTO;
+﻿using AutoMapper;
+using BusinessLogic.DTO;
 using BusinessLogic.Models;
 using DataAccess.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -8,13 +9,31 @@ namespace DataAccess.DAOs
     public class NewsDAO : INewsDAO
     {
         private readonly ApplicationDbContext _dbContext;
-
-        public NewsDAO(ApplicationDbContext dbContext)
+		public NewsDAO(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-        }
+		}
 
-        public async Task<List<NewsDTO>> SearchAsync(SearchModel searchModel)
+		public async Task<List<NewsDTO>> GetListNews()
+		{
+            var news =  _dbContext.News.Select(n => new NewsDTO
+			{
+				Id = n.Id,
+				Title = n.Title,
+				CategoryId = n.CategoryId,
+				Content = n.Content,
+				CreatedBy = n.CreatedBy,
+				ImgPath = n.ImgPath,
+				NumberOfLikes = n.NumberOfLikes,
+				PostedDate = n.PostedDate,
+				Status = n.Status,
+				SubCategoryId = n.SubCategoryId
+			}).ToListAsync();
+			return await news;
+		}
+
+
+		public async Task<List<NewsDTO>> SearchAsync(SearchModel searchModel)
         {
             var query = _dbContext.News.Select(n => new NewsDTO
             {

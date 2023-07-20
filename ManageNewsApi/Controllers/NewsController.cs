@@ -23,6 +23,11 @@ namespace ManageNewsApi.Controllers
         {
             return await _newsBusiness.SearchAsync(searchModel);
         }
+        [HttpGet]
+        public async Task<List<NewsDTO>> GetListNews()
+        {
+            return await _newsBusiness.GetListNews();
+        }
 
         [HttpGet]
         [Route("id")]

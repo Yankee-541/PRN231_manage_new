@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BusinessLogic.Models;
+﻿namespace BusinessLogic.Models;
 
 public partial class SubCategory
 {

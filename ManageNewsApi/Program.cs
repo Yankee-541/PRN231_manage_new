@@ -17,6 +17,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
 builder.Services.AddScoped<IUserBusiness, UserBusiness>();
 builder.Services.AddScoped<IUserDAO, UserDAO>();
 builder.Services.AddScoped<INewsBusiness, NewsBusiness>();
@@ -48,6 +49,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseCors(builder =>
+builder.AllowAnyOrigin()
+.AllowAnyMethod()
+.AllowAnyHeader()
+);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -55,6 +62,14 @@ if (app.Environment.IsDevelopment())
 	IdentityModelEventSource.ShowPII = true;
 
 }
+<<<<<<< HEAD
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseRouting();
+app.MapControllers();
+
+
+=======
 app.UseRouting();
 app.UseCors(builder =>
  builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
@@ -64,4 +79,5 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
+>>>>>>> origin
 app.Run();

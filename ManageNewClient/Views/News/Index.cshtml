@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Index";
 }
 <style>
     ul {
@@ -19,7 +19,7 @@
         <div class="col-lg-4">
             <!-- Sidebar Section (e.g., featured news, ads, etc.) -->
             <div class="sidebar">
-               <ul class="news-list">
+                <ul class="news-list">
                     <!-- Articles will be dynamically added here -->
                 </ul>
             </div>
@@ -44,18 +44,18 @@
                         result.forEach(function (article) {
                             console.log(article)
                             var articleItem = `
-                                                <li class="news-item">
-                                                    <a href=\"News/Details/?id=${article.id}">
-                                                        <div class="news-image">
-                                                            <img src="${article.imgPath}" alt="${article.title}" />
-                                                        </div>
-                                                        <div class="news-content">
-                                                            <h3 class="news-title">${article.title}</h3>
-                                                            <p class="news-excerpt">${article.content}</p>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            `;
+                                                        <li class="news-item">
+                                                            <a href=\"News/Details/?id=${article.id}">
+                                                                <div class="news-image">
+                                                                    <img src="${article.imgPath}" alt="${article.title}" />
+                                                                </div>
+                                                                <div class="news-content">
+                                                                    <h3 class="news-title">${article.title}</h3>
+                                                                    <p class="news-excerpt">${article.content}</p>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                    `;
 
                             newsList.append(articleItem);
                         });

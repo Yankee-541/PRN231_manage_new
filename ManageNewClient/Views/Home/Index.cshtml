@@ -37,6 +37,17 @@
         width: 100px;
         height: 100px;
     }
+
+    .category-list{
+        top: 0;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 24px;
+        position: sticky;
+        background: white;
+        padding: 16px 0;
+    }
 </style>
 <div class="container">
     <div class="banner">
@@ -45,6 +56,9 @@
         <h2>Welcome to Our News Website</h2>
         <p>Stay updated with the latest news and events.</p>
         <!-- You can add any additional links or buttons for navigation here -->
+    </div>
+    <div class="category-list">
+        <!-- Categories will be dynamically added here -->
     </div>
     <div class="row">
         <div class="col-lg-8">
@@ -69,6 +83,22 @@
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {
+            $.ajax({
+                url: 'https://localhost:7255/api/Categories/GetAll',
+                method: 'GET',
+                dataType: 'json',
+                success: function (categories) {
+                    // Process the category data and populate the category list
+                    var categoryList = $('.category-list');
+                    $.each(categories, function (index, category) {
+                        var categoryItem = $('<div class="category-item">' + category.name + '</div>');
+                        categoryList.append(categoryItem);
+                    });
+                },
+                error: function (error) {
+                    console.log('Error fetching categories: ' + error);
+                }
+            });
             fetchNewsArticles();
 
             function fetchNewsArticles() {

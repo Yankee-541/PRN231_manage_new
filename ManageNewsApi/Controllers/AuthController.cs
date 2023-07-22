@@ -60,7 +60,6 @@ namespace ManageNewsApi.Controllers
 			}
 
 			#region Tạo token
-
 			try
 			{
 				//create claims details based on the user information

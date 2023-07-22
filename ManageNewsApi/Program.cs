@@ -39,9 +39,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
 	};
 });
+
+#endregion
+
 builder.Services.AddCors();
-
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyStoreDB")));
 
@@ -53,15 +54,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 	IdentityModelEventSource.ShowPII = true;
-
 }
 app.UseRouting();
-app.UseCors(builder =>
- builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+app.UseCors(builder =>builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseHttpsRedirection();
-
 app.MapControllers();
-
 app.Run();

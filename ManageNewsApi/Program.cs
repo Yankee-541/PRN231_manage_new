@@ -1,7 +1,6 @@
 ﻿using BusinessLogic.Models;
 using DataAccess.DAOs;
 using DataAccess.Interface;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -48,6 +47,8 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityRequirement(securityRequirement);
 });
 
+builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
 builder.Services.AddScoped<IUserBusiness, UserBusiness>();
 builder.Services.AddScoped<IUserDAO, UserDAO>();
 builder.Services.AddScoped<INewsBusiness, NewsBusiness>();
@@ -83,19 +84,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseCors(builder =>
+builder.AllowAnyOrigin()
+.AllowAnyMethod()
+.AllowAnyHeader()
+);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
     IdentityModelEventSource.ShowPII = true;
 }
-app.UseRouting();
-app.UseCors(builder =>
- builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseHttpsRedirection();
-
+app.UseRouting();
 app.MapControllers();
+
 
 app.Run();

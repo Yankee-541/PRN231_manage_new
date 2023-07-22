@@ -49,6 +49,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseCors(builder =>
+builder.AllowAnyOrigin()
+.AllowAnyMethod()
+.AllowAnyHeader()
+);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -56,8 +62,6 @@ if (app.Environment.IsDevelopment())
 	IdentityModelEventSource.ShowPII = true;
 }
 app.UseRouting();
-app.UseCors(builder =>
- builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

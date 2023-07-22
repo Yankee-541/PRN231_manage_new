@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Models;
 using DataAccess.DAOs;
 using DataAccess.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -96,9 +97,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     IdentityModelEventSource.ShowPII = true;
 }
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseRouting();
 app.MapControllers();
 
 

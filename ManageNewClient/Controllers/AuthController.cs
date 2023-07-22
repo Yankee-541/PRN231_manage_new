@@ -32,7 +32,10 @@ namespace ManageNewsClient.Controllers
 					var response = await responseMessage.Content.ReadFromJsonAsync<LoginModelResponse>();
 					KeepToken(response.Token);
 					SetSession(response.userDTO);
-					
+					if(response.userDTO.Role == 1)
+					{
+                        return Redirect("../Admin");
+                    }
 					return Redirect("../Home");
 				case System.Net.HttpStatusCode.NotFound:
 					ViewData["msg"] = "Username or password is in valid. Please try again!";

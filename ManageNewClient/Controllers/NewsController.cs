@@ -8,11 +8,14 @@ namespace ManageNewsClient.Controllers
         {
             return View();
         }
+<<<<<<< HEAD
 
         public async Task<IActionResult> Details(int id)
         {
 
             return View();
         }
+=======
+>>>>>>> origin
     }
 }

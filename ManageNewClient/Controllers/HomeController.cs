@@ -4,29 +4,29 @@ using System.Diagnostics;
 
 namespace ManageNewClient.Controllers
 {
-	public class HomeController : Controller
+	public class HomeController : BaseController
 	{
-		private readonly ILogger<HomeController> _logger;
+		private const string _url = "";
 
-		public HomeController(ILogger<HomeController> logger)
+		[HttpGet]
+		public async Task<IActionResult> Index()
 		{
-			_logger = logger;
+			//ViewBag.LeftMenu = true;
+			var account = GetSession();
+            //ViewBag.account = account.Name;
+            
+            //if (account == null)
+            //{
+            //	return Redirect("../Auth/Login");
+            //}
+            return View();
 		}
 
-		public IActionResult Index()
+		[HttpGet]
+		public async Task<IActionResult> Logout()
 		{
-			return View();
-		}
-
-		public IActionResult Privacy()
-		{
-			return View();
-		}
-
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+			HttpContext.Session.Clear();
+			return Redirect("../Auth/Login");
 		}
 	}
 }

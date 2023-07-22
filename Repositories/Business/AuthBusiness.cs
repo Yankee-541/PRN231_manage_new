@@ -28,7 +28,10 @@ namespace Repositories.Business
 			{
 				Id = account.Id,
 				Username = account.Username,
-				
+				Name = account.Name,
+				Role = account.Role,
+
+
 			};
 		}
 	}

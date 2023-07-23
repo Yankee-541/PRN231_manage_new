@@ -4,9 +4,7 @@
     {
         public const string Admin = "Admin";
         public const string User = "User";
-
-		public const string Writer = "Writer";
-		public const string Reviewer = "Reviewer";
-
-	}
+        public const string Writer = "Writer";
+        public const string Reviewer = "Reviewer";
+    }
 }

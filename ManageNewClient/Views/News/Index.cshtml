@@ -31,7 +31,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
             fetchNewsArticles();
-
+            let params = (new URL(document.location)).searchParams;
+            let categoryId = params.get("id");
             function fetchNewsArticles() {
                 $(".news-list").html("");
                 $.ajax({

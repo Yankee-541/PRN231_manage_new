@@ -4,7 +4,7 @@ namespace ManageNewsClient.Controllers
 {
     public class NewsController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
             return View();
         }

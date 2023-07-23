@@ -14,6 +14,5 @@ namespace ManageNewsClient.Controllers
 
             return View();
         }
-
     }
 }

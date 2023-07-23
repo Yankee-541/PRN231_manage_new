@@ -24,26 +24,26 @@ namespace ManageNewsClient.Controllers
                 return Redirect("../Home");
             }
             ViewBag.currentUser = account;
-            
-            //HttpResponseMessage responseMessage = await httpClient.GetAsync(_urlGetUser + $"GetAllUserAsync");
-            //switch (responseMessage.StatusCode)
-            //{
-            //    case System.Net.HttpStatusCode.OK:
-            //        var response = await responseMessage.Content.ReadFromJsonAsync<List<UserDTO>>();
-            //        ViewBag.currentPage = page;
-            //        ViewBag.TotalPage = (int)Math.Ceiling((double)response.Count() / pageSize); ;
-            //        return View(response.Skip((page - 1) * pageSize).Take(pageSize).ToList());
 
-            //    case System.Net.HttpStatusCode.NotFound:
-            //        return NotFound();
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(_urlGetUser + $"GetAllUser");
+            switch (responseMessage.StatusCode)
+            {
+                case System.Net.HttpStatusCode.OK:
+                    var response = await responseMessage.Content.ReadFromJsonAsync<List<UserDTO>>();
+                    ViewBag.currentPage = page;
+                    ViewBag.TotalPage = (int)Math.Ceiling((double)response.Count() / pageSize); 
+                    return View(response.Skip((page - 1) * pageSize).Take(pageSize).ToList());
 
-            //    case System.Net.HttpStatusCode.Forbidden:
-            //        return StatusCode(StatusCodes.Status403Forbidden);
+                case System.Net.HttpStatusCode.NotFound:
+                    return NotFound();
 
-            //    case System.Net.HttpStatusCode.Unauthorized:
-            //        return Redirect("../Auth/Login");
+                case System.Net.HttpStatusCode.Forbidden:
+                    return StatusCode(StatusCodes.Status403Forbidden);
 
-            //}
+                case System.Net.HttpStatusCode.Unauthorized:
+                    return Redirect("../Auth/Login");
+
+            }
             return View();
         }
 

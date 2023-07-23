@@ -23,9 +23,9 @@ namespace Repositories.Business
             await _userDAO.DeleteAsync(id);
         }
 
-        public async Task<List<UserDTO>> GetAllAsync()
+        public async Task<List<UserDTO>> GetAllAsync(bool isActive)
         {
-            return await _userDAO.GetAllAsync();
+            return await _userDAO.GetAllAsync(isActive);
         }
 
         public async Task<UserDTO> GetByIdAsync(int id)

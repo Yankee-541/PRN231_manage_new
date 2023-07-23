@@ -11,15 +11,14 @@
 @if (ViewBag.currentUser.Role == 1)
 {
 	<div style="display: flex; justify-content: space-between;">
-		<h2>Manager User</h2>
+		<h2>Recycle bin</h2>
 
-		<a href="@Url.Action("Bin", "Admin")">
+		<a href="../Admin">
 			<button style="width: 68px;height: 45px;">
-				Bin
+				Manager user
 			</button>
 		</a>
 	</div>
-	
 	<table class="table">
 		<thead>
 			<tr>
@@ -86,14 +85,14 @@
 						}
 
 						<th>
-							<a href="@Url.Action("Delete", "Admin", new { id = @item.Id})">Delete</a>
+							<a href="@Url.Action("Restore", "Admin", new { id = @item.Id})">Restore</a>
 						</th>
 					</tr>
 
 				}
 			}
 		</tbody>
-		
+
 	</table>
 	<partial name="_Paging" model="@pagingModel" />
 }

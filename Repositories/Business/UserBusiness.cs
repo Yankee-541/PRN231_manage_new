@@ -18,9 +18,9 @@ namespace Repositories.Business
             await _userDAO.CreateAsync(dto);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAndRestoreAsync(int id, bool a)
         {
-            await _userDAO.DeleteAsync(id);
+            await _userDAO.DeleteAndRestoreAsync(id, a);
         }
 
         public async Task<List<UserDTO>> GetAllAsync(bool isActive)

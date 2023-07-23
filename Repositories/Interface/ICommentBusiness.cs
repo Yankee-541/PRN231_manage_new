@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Repositories.Interface
 {
-	public interface IAuthBusiness
+	public interface ICommentBusiness
 	{
-		Task<AccountDTo> GetAccountAsync(string? username, string? password, bool? isActive);
+		Task<int> CreateCmt(CommenDTO dto);
+
+
 	}
 }

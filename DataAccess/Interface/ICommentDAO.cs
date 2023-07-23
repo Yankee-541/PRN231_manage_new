@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.Interface
+namespace DataAccess.Interface
 {
-	public interface IAuthBusiness
+	public interface ICommentDAO
 	{
-		Task<AccountDTo> GetAccountAsync(string? username, string? password, bool? isActive);
+		Task<int> CreateAsync(CommenDTO dto);
 	}
 }

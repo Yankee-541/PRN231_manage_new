@@ -58,6 +58,8 @@ builder.Services.AddScoped<ICategoriesDAO, CategoriesDAO>();
 builder.Services.AddScoped<ICategoriesBusiness, CategoriesBusiness>();
 builder.Services.AddScoped<IAuthBusiness, AuthBusiness>();
 builder.Services.AddScoped<IAccountDAO, AccountDAO>();
+builder.Services.AddScoped<ICommentDAO, CommentDAO>();
+builder.Services.AddScoped<ICommentBusiness, CommentBusiness>();
 
 builder.Services.AddAuthorization(options =>
 {

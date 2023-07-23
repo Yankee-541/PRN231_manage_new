@@ -15,7 +15,8 @@ public partial class Comment
 
     public int CreatedBy { get; set; }
 
-    public virtual User CreatedByNavigation { get; set; } = null!;
+	public bool? IsActive { get; set; }
+	public virtual User CreatedByNavigation { get; set; } = null!;
 
     public virtual News News { get; set; } = null!;
 }

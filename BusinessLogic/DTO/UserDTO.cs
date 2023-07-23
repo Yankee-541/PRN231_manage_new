@@ -13,5 +13,7 @@
         public string Name { get; set; } = null!;
 
         public DateTime Dob { get; set; }
-    }
+		public bool? IsActive { get; set; }
+
+	}
 }

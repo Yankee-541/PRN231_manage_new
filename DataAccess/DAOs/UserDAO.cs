@@ -26,7 +26,8 @@ namespace DataAccess.DAOs
                     Password = dto.Password,
                     Name = dto.Name,
                     Role = dto.Role,
-                    Dob = dto.Dob
+                    Dob = dto.Dob,
+                    IsActive = true                    
                 };
                 await _dbContext.Users.AddAsync(user);
                 await _dbContext.SaveChangesAsync();

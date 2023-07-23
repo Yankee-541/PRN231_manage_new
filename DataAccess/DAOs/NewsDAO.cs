@@ -14,9 +14,9 @@ namespace DataAccess.DAOs
             _dbContext = dbContext;
 		}
 
-		public async Task<List<NewsDTO>> GetListNews()
+		public async Task<List<NewsDTO>> GetListNews(int status)
 		{
-            var news =  _dbContext.News.Select(n => new NewsDTO
+            var news =  _dbContext.News.Where(n=>n.Status==status).Select(n => new NewsDTO
 			{
 				Id = n.Id,
 				Title = n.Title,
@@ -108,7 +108,7 @@ namespace DataAccess.DAOs
                     CreatedDate = DateTime.UtcNow.AddHours(7).Date,
                     CreatedBy = dto.CreatedBy,
                     SubCategoryId = dto.SubCategoryId,
-                    Status = dto.Status,
+                    Status = 0,
                 };
                 var entity = await _dbContext.News.AddAsync(news);
                 await _dbContext.SaveChangesAsync();

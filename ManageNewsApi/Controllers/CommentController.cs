@@ -27,9 +27,5 @@ namespace ManageNewsApi.Controllers
 			
 		}
 
-
-
-
-
 	}
 }

@@ -29,10 +29,18 @@ namespace ManageNewsApi.Controllers
         [HttpGet]
         public async Task<List<NewsDTO>> GetListNews()
         {
-            return await _newsBusiness.GetListNews();
+            return await _newsBusiness.GetListNews(1);
         }
 
-        [HttpGet]
+		[HttpGet]
+		//[Authorize(Policy = Roles.Reviewer)]
+		public async Task<List<NewsDTO>> NewsQueueAsync()
+		{
+			return await _newsBusiness.GetListNews(0);
+		}
+
+
+		[HttpGet]
         [Route("id")]
         public async Task<NewsDTO> GetByIdAsync(int id)
         {

@@ -27,9 +27,12 @@ namespace ManageNewsApi.Controllers
 			
 		}
 
-
-
-
+		[HttpGet]
+		public async Task<IActionResult> GetCmtByNewIdAsync(int newId)
+		{
+			var users = await _cmtBusiness.GetCmtByNewId(newId);
+			return users != null ? Ok(users) : NotFound();
+		}
 
 	}
 }

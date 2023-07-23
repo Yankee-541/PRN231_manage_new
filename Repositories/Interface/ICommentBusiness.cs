@@ -10,7 +10,7 @@ namespace Repositories.Interface
 	public interface ICommentBusiness
 	{
 		Task<int> CreateCmt(CommenDTO dto);
-
+		Task<CommenDTO> GetCmtByNewId(int newId);
 
 	}
 }

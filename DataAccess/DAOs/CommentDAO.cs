@@ -43,5 +43,17 @@ namespace DataAccess.DAOs
 				throw;
 			}
 		}
+
+		public async Task<CommenDTO> GetCmtByNewId(int id)
+		{
+			return await _dbContext.Comments.Select(u => new CommenDTO
+			{
+				Id = u.Id,
+				Content = u.Content,
+				CreateDate = u.CreateDate,
+				NewsId = u.NewsId,
+				CreatedBy = u.CreatedBy
+			}).FirstOrDefaultAsync(x => x.NewsId == id);
+		}
 	}
 }

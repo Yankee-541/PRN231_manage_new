@@ -22,5 +22,10 @@ namespace Repositories.Business
 		{
 			return await _cmtDAO.CreateAsync(dto);
 		}
+
+		public async Task<CommenDTO> GetCmtByNewId(int newId)
+		{
+			return await _cmtDAO.GetCmtByNewId(newId);
+		}
 	}
 }

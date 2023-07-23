@@ -1,0 +1,70 @@
+﻿@model IEnumerable<BusinessLogic.DTO.NewsDTO>
+@{
+	var pagingModel = new BusinessLogic.DTO.PageHelper()
+			{
+				pageCurrent = ViewBag.currentPage,
+				totalPages = ViewBag.TotalPage,
+				url = $"Queue?page="
+			};
+}
+
+@if (ViewBag.currentUser.Role == 4)
+{
+	<div style="display: flex; justify-content: space-between;">
+		<h2>News Queue</h2>
+
+@*		<a href="@Url.Action("Bin", "Admin")">
+			<button style="width: 68px;height: 45px;">
+				Bin
+			</button>
+		</a>*@
+	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					Title
+				</th>
+				<th>
+					Category
+				</th>
+				<th>
+					Create by
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model != null && Model.Count() > 0)
+			{
+				foreach (var item in Model)
+				{
+					<tr>
+						<th>
+							@item.Title
+						</th>
+						<th>
+							@item.CategoryId
+						</th>
+						<th>
+							@item.CreatedBy
+						</th>
+
+						<th>
+							<a href="Details/?id=@item.Id">Details</a>
+						</th>
+					</tr>
+
+				}
+			}
+		</tbody>
+
+	</table>
+	<partial name="_Paging" model="@pagingModel" />
+}
+<style>
+	.page-link.active {
+		background-color: aquamarine;
+	}
+</style>

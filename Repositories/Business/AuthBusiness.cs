@@ -16,9 +16,9 @@ namespace Repositories.Business
 		{
 			_accountDao = accountDao;
 		}
-		public async Task<AccountDTo> GetAccountAsync(string? username, string? password)
+		public async Task<AccountDTo> GetAccountAsync(string? username, string? password, bool? isActive)
 		{
-			var account = await _accountDao.GetAccountAsync(username, password);
+			var account = await _accountDao.GetAccountAsync(username, password, isActive);
 			if (account == null)
 			{
 				return null;

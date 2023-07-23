@@ -15,10 +15,10 @@ namespace ManageNewsApi.Controllers
             _userBusiness = userBusiness;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllUserAsync()
+        [HttpGet("{isActive}")]
+        public async Task<IActionResult> GetAllUserAsync(bool isActive)
         {
-            var users = await _userBusiness.GetAllAsync(true);
+            var users = await _userBusiness.GetAllAsync(isActive);
             return users != null ? Ok(users) : NotFound();
         }
 
@@ -44,7 +44,12 @@ namespace ManageNewsApi.Controllers
         [HttpDelete]
         public async Task DeleteAsync(int id)
         {
-            await _userBusiness.DeleteAsync(id);
+            await _userBusiness.DeleteAndRestoreAsync(id, false);
+        }
+        [HttpDelete]
+        public async Task RestoreAsync(int id)
+        {
+            await _userBusiness.DeleteAndRestoreAsync(id, true);
         }
     }
 }

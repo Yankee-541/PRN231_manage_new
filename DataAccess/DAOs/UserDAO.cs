@@ -2,6 +2,7 @@
 using BusinessLogic.Models;
 using DataAccess.Interface;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DataAccess.DAOs
 {
@@ -35,16 +36,17 @@ namespace DataAccess.DAOs
             {
                 await transaction.RollbackAsync();
             }
-        }
+		}
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAndRestoreAsync(int id, bool active)
         {
             var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
                 var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
-                _dbContext.Users.Remove(user);
-                await _dbContext.SaveChangesAsync();
+				user.IsActive = active;
+				_dbContext.Entry(user).State = EntityState.Modified;
+				await _dbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
             }
             catch (Exception)

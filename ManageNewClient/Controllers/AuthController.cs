@@ -40,6 +40,9 @@ namespace ManageNewsClient.Controllers
 				case System.Net.HttpStatusCode.NotFound:
 					ViewData["msg"] = "Username or password is in valid. Please try again!";
 					return View(model);
+				case System.Net.HttpStatusCode.BadRequest:
+					ViewData["msg"] = "Your account may have been locked !!!";
+					return View(model);
 			}
 
 			return View(model);

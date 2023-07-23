@@ -12,6 +12,6 @@ namespace Repositories.Interface
 
         Task UpdateAsync(UserDTO dto);
 
-        Task DeleteAsync(int id);
+        Task DeleteAndRestoreAsync(int id, bool active);
     }
 }

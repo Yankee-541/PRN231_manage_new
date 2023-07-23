@@ -27,10 +27,15 @@ namespace ManageNewsApi.Controllers
 		[Route("Login")]
 		public async Task<IActionResult> LoginAsync([FromBody] LoginModelDTO account)
 		{
-			var response = await _authBusiness.GetAccountAsync(account.Username, account.Password);
+			var response = await _authBusiness.GetAccountAsync(account.Username, account.Password, false);
 			if (response == null)
 			{
 				return NotFound();
+			}
+			var response2 = await _authBusiness.GetAccountAsync(account.Username, account.Password, true);
+			if (response2 == null)
+			{
+				return BadRequest();
 			}
 
 			var token = GenerateToken(response);

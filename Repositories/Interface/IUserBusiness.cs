@@ -6,7 +6,7 @@ namespace Repositories.Interface
     {
         Task<UserDTO> GetByIdAsync(int id);
 
-        Task<List<UserDTO>> GetAllAsync();
+        Task<List<UserDTO>> GetAllAsync(bool isActive);
 
         Task CreateAsync(UserDTO dto);
 

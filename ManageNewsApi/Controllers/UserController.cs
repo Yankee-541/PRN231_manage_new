@@ -18,7 +18,7 @@ namespace ManageNewsApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUserAsync()
         {
-            var users = await _userBusiness.GetAllAsync();
+            var users = await _userBusiness.GetAllAsync(true);
             return users != null ? Ok(users) : NotFound();
         }
 

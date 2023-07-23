@@ -17,7 +17,9 @@ public partial class User
 
     public DateTime Dob { get; set; }
 
-    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+	public bool? IsActive { get; set; }
+
+	public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
     public virtual ICollection<News> News { get; set; } = new List<News>();
 }

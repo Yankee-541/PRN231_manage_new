@@ -1,7 +1,72 @@
-﻿@{
-    ViewData["Title"] = "Admin";
+﻿@model IEnumerable<BusinessLogic.DTO.UserDTO>
+@{
+	var pagingModel = new BusinessLogic.DTO.PageHelper()
+			{
+				pageCurrent = ViewBag.currentPage,
+				totalPages = ViewBag.TotalPage,
+				url = $"Admin?page="
+			};
 }
+
 @if (ViewBag.currentUser.Role == 1)
 {
-<div>liw liw</div>
+	<h2>Manager User</h2>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					Id
+				</th>
+				<th>
+					Name
+				</th>
+				<th>
+					Username
+				</th>
+				<th>
+					Dob
+				</th>
+				<th>
+					Role
+				</th>
+
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model != null && Model.Count() > 0)
+			{
+				foreach (var item in Model)
+				{
+					<tr>
+						<th>
+							@item.Id
+						</th>
+						<th>
+							@item.Name
+						</th>
+						<th>
+							@item.Username
+						</th>
+						<th>
+							@item.Dob
+						</th>
+						<th>
+							@item.Role
+						</th>
+
+						<th></th>
+					</tr>
+
+				}
+			}
+		</tbody>
+		
+	</table>
+	<partial name="_Paging" model="@pagingModel" />
 }
+<style>
+	.page-link.active {
+		background-color: aquamarine;
+	}
+</style>

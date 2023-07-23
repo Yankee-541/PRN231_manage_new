@@ -53,9 +53,9 @@ namespace DataAccess.DAOs
             }
         }
 
-        public async Task<List<UserDTO>> GetAllAsync()
+        public async Task<List<UserDTO>> GetAllAsync(bool isActive)
         {
-            return await _dbContext.Users.Select(u => new UserDTO
+            return await _dbContext.Users.Where(u => u.IsActive == isActive).Select(u => new UserDTO
             {
                 Id = u.Id,
                 Name = u.Name,

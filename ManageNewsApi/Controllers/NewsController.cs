@@ -1,6 +1,8 @@
 ﻿using BusinessLogic.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Interface;
+using WebApiProject.Constants;
 
 namespace ManageNewsApi.Controllers
 {
@@ -23,6 +25,7 @@ namespace ManageNewsApi.Controllers
         {
             return await _newsBusiness.SearchAsync(searchModel);
         }
+
         [HttpGet]
         public async Task<List<NewsDTO>> GetListNews()
         {
@@ -42,6 +45,29 @@ namespace ManageNewsApi.Controllers
             dto.Id = await _newsBusiness.CreateAsync(dto);
             dto.ImgPath = await SaveImage(dto.Id, images);
             await _newsBusiness.EditAsync(dto);
+        }
+
+        [HttpPost]
+        [Route("{id}")]
+        [Authorize(Policy = Roles.Reviewer)]
+        public async Task<IActionResult> EditStatusAsync(int id, int status)
+        {
+            var userId = Int32.Parse(User.FindFirst("Id")?.Value);
+            var news = await _newsBusiness.GetByIdAsync(id);
+
+            if (news.Status != 1)
+            {
+                return NoContent();
+            }
+
+            news.Status = status;
+            if (status == 3)
+            {
+                news.PostedDate = DateTime.UtcNow.AddHours(7);
+            }
+            news.ModifiedBy = userId;
+            await _newsBusiness.EditAsync(news);
+            return Ok();
         }
 
         private async Task<string> SaveImage(int id, List<IFormFile> images)

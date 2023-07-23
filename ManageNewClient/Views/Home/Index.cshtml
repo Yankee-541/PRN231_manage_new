@@ -38,7 +38,7 @@
         height: 100px;
     }
 
-    .category-list{
+    .category-list {
         top: 0;
         display: flex;
         align-items: center;
@@ -48,6 +48,37 @@
         background: white;
         padding: 16px 0;
     }
+
+    a {
+        color: #000000;
+        text-decoration: none;
+        text-transform: capitalize;
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+        .search-bar input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-bar button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .search-bar button:hover {
+                background-color: #45a049;
+            }
 </style>
 <div class="container">
     <div class="banner">
@@ -59,6 +90,10 @@
     </div>
     <div class="category-list">
         <!-- Categories will be dynamically added here -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search news...">
+            <button id="searchButton">Search</button>
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-8">
@@ -114,30 +149,30 @@
                         result.forEach(function (article) {
 
                             var articleItem = `
-                                                        <li class="news-item">
-                                                           <a href=\"News/Details/?id=${article.id}">
-                                                                <div class="news-image">
-                                                                    <img src="${article.imgPath}" />
-                                                                </div>
-                                                                <div class="news-content">
-                                                                    <h5 class="news-title">${article.title}</h3>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                    `;
+                                                                        <li class="news-item">
+                                                                           <a href=\"News/Details/?id=${article.id}">
+                                                                                <div class="news-image">
+                                                                                    <img src="${article.imgPath}" />
+                                                                                </div>
+                                                                                <div class="news-content">
+                                                                                    <h5 class="news-title">${article.title}</h3>
+                                                                                </div>
+                                                                            </a>
+                                                                        </li>
+                                                                    `;
                             var articleItemSidebar = `
-                                                        <li class="news-item">
-                                                           <a href=\"News/Details/?id=${article.id}" style="display: flex;flex-direction: row;width: 100%; gap: 16px;">
-                                                                <div class="news-image">
-                                                                    <img src="${article.imgPath}"/>
-                                                                </div>
-                                                                <div class="news-content">
-                                                                    <h5 class="news-title">${article.title}</h3>
+                                                                        <li class="news-item">
+                                                                           <a href=\"News/Details/?id=${article.id}" style="display: flex;flex-direction: row;width: 100%; gap: 16px;">
+                                                                                <div class="news-image">
+                                                                                    <img src="${article.imgPath}"/>
+                                                                                </div>
+                                                                                <div class="news-content">
+                                                                                    <h5 class="news-title">${article.title}</h3>
 
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                    `;
+                                                                                </div>
+                                                                            </a>
+                                                                        </li>
+                                                                    `;
 
                             newsList.append(articleItem);
                             sidebar.append(articleItemSidebar)

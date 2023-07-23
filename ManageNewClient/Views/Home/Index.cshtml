@@ -4,9 +4,97 @@
 <style>
     ul {
         list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 0px;
+        align-items: flex-start;
     }
+
+    .banner {
+        background-color: #f0f0f0;
+        padding: 20px;
+        text-align: center;
+    }
+
+        .banner img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+    .news-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .row {
+        margin-top: 24px;
+    }
+
+    .news-image img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .category-list {
+        top: 0;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 24px;
+        position: sticky;
+        background: white;
+        padding: 16px 0;
+    }
+
+    a {
+        color: #000000;
+        text-decoration: none;
+        text-transform: capitalize;
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+        .search-bar input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-bar button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .search-bar button:hover {
+                background-color: #45a049;
+            }
 </style>
 <div class="container">
+    <div class="banner">
+        <!-- Replace 'path/to/banner-image.jpg' with the actual path to your banner image -->
+        <img src="path/to/banner-image.jpg" alt="Banner Image" />
+        <h2>Welcome to Our News Website</h2>
+        <p>Stay updated with the latest news and events.</p>
+        <!-- You can add any additional links or buttons for navigation here -->
+    </div>
+    <div class="category-list">
+        <!-- Categories will be dynamically added here -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search news...">
+            <button id="searchButton">Search</button>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-8">
             <!-- News Articles Section -->
@@ -19,7 +107,7 @@
         <div class="col-lg-4">
             <!-- Sidebar Section (e.g., featured news, ads, etc.) -->
             <div class="sidebar">
-               <ul class="news-list">
+                <ul class="news-list-sidebar">
                     <!-- Articles will be dynamically added here -->
                 </ul>
             </div>
@@ -30,6 +118,22 @@
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {
+            $.ajax({
+                url: 'https://localhost:7255/api/Categories/GetAll',
+                method: 'GET',
+                dataType: 'json',
+                success: function (categories) {
+                    // Process the category data and populate the category list
+                    var categoryList = $('.category-list');
+                    $.each(categories, function (index, category) {
+                        var categoryItem = $('<div class="category-item">' + category.name + '</div>');
+                        categoryList.append(categoryItem);
+                    });
+                },
+                error: function (error) {
+                    console.log('Error fetching categories: ' + error);
+                }
+            });
             fetchNewsArticles();
 
             function fetchNewsArticles() {
@@ -41,23 +145,37 @@
                     dataType: "json",
                     success: function (result, status, xhr) {
                         var newsList = $(".news-list");
+                        var sidebar = $(".news-list-sidebar")
                         result.forEach(function (article) {
-                            console.log(article)
+
                             var articleItem = `
-                                                <li class="news-item">
-                                                    <a href=\"News/Details/?id=${article.id}">
-                                                        <div class="news-image">
-                                                            <img src="${article.imgPath}" alt="${article.title}" />
-                                                        </div>
-                                                        <div class="news-content">
-                                                            <h3 class="news-title">${article.title}</h3>
-                                                            <p class="news-excerpt">${article.content}</p>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            `;
+                                                                        <li class="news-item">
+                                                                           <a href=\"News/Details/?id=${article.id}">
+                                                                                <div class="news-image">
+                                                                                    <img src="${article.imgPath}" />
+                                                                                </div>
+                                                                                <div class="news-content">
+                                                                                    <h5 class="news-title">${article.title}</h3>
+                                                                                </div>
+                                                                            </a>
+                                                                        </li>
+                                                                    `;
+                            var articleItemSidebar = `
+                                                                        <li class="news-item">
+                                                                           <a href=\"News/Details/?id=${article.id}" style="display: flex;flex-direction: row;width: 100%; gap: 16px;">
+                                                                                <div class="news-image">
+                                                                                    <img src="${article.imgPath}"/>
+                                                                                </div>
+                                                                                <div class="news-content">
+                                                                                    <h5 class="news-title">${article.title}</h3>
+
+                                                                                </div>
+                                                                            </a>
+                                                                        </li>
+                                                                    `;
 
                             newsList.append(articleItem);
+                            sidebar.append(articleItemSidebar)
                         });
                     },
                     error: function (xhr, status, error) {

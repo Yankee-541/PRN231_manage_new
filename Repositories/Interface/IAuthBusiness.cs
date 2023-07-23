@@ -9,6 +9,6 @@ namespace Repositories.Interface
 {
 	public interface IAuthBusiness
 	{
-		Task<AccountDTo> GetAccountAsync(string? username, string? password, bool? isActive);
+		Task<AccountDTo> GetAccountAsync(string? username, string? password, bool isActive);
 	}
 }

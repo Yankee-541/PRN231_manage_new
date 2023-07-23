@@ -10,6 +10,6 @@ namespace DataAccess.Interface
 {
 	public interface IAccountDAO
 	{
-		Task<User> GetAccountAsync(string? username, string? password, bool? isActive);
+		Task<User> GetAccountAsync(string? username, string? password, bool isActive);
 	}
 }

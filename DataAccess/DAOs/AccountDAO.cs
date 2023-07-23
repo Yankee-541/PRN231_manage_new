@@ -17,13 +17,17 @@ namespace DataAccess.DAOs
 		{
 			_dbContext = dbContext;
 		}
-		public async Task<User> GetAccountAsync(string? username, string? password, bool? isActive)
+		public async Task<User> GetAccountAsync(string? username, string? password, bool isActive)
 		{
-			var query =  _dbContext.Users.FirstOrDefaultAsync(x => x.Username.Equals(username) && x.Password.Equals(password));
-			if (isActive == true) {
+			if(isActive == false)
+			{
+				var query = _dbContext.Users.FirstOrDefaultAsync(x => x.Username.Equals(username) && x.Password.Equals(password));
+				return await query;
+			}else if (isActive == true) {
 				return await _dbContext.Users.FirstOrDefaultAsync(x => x.Username.Equals(username) && x.Password.Equals(password) && x.IsActive == true);
 			}
-			return await query;
+			return null;
+			
 		}
 	}
 }

@@ -4,13 +4,13 @@ namespace Repositories.Interface
 {
     public interface ISubCategoryBusiness
     {
-        Task<List<CategoryDTO>> GetAllAsync();
+        Task<List<SubCategoryDTO>> GetAllAsync(int categoryId);
 
-        Task<CategoryDTO> GetSubCategoryByIDAsync(int id);
+        Task<SubCategoryDTO> GetSubCategoryByIDAsync(int id);
 
-        Task CreateSubCategoryAsync(CategoryDTO category);
+        Task CreateSubCategoryAsync(SubCategoryDTO category);
 
-        Task UpdateSubCategoryAsync(CategoryDTO category);
+        Task UpdateSubCategoryAsync(SubCategoryDTO category);
 
         Task DeleteSubCategoryAsync(int id);
     }

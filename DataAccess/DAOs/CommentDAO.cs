@@ -46,9 +46,9 @@ namespace DataAccess.DAOs
 
 		public async Task<CommenDTO> GetCmtByNewId(int id)
 		{
-			return await _dbContext.Comments.Select(u => new CommenDTO
+			return await _dbContext.Comments.Include(x => x.CreatedByNavigation).Select(u => new CommenDTO
 			{
-				Id = u.Id,
+				Username = u.CreatedByNavigation.Name,
 				Content = u.Content,
 				CreateDate = u.CreateDate,
 				NewsId = u.NewsId,

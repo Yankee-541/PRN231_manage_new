@@ -4,7 +4,7 @@ namespace DataAccess.Interface
 {
     public interface ISubCategoryDAO
     {
-        Task<List<SubCategoryDTO>> GetAllAsync();
+        Task<List<SubCategoryDTO>> GetAllAsync(int categoryId);
 
         Task<SubCategoryDTO> GetSubCategoryByIDAsync(int id);
 

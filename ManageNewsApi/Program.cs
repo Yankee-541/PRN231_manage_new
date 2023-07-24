@@ -56,6 +56,8 @@ builder.Services.AddScoped<INewsBusiness, NewsBusiness>();
 builder.Services.AddScoped<INewsDAO, NewsDAO>();
 builder.Services.AddScoped<ICategoriesDAO, CategoriesDAO>();
 builder.Services.AddScoped<ICategoriesBusiness, CategoriesBusiness>();
+builder.Services.AddScoped<ISubCategoryDAO, SubCategoryDAO>();
+builder.Services.AddScoped<ISubCategoryBusiness, SubCategoryBusiness>();
 builder.Services.AddScoped<IAuthBusiness, AuthBusiness>();
 builder.Services.AddScoped<IAccountDAO, AccountDAO>();
 builder.Services.AddScoped<ICommentDAO, CommentDAO>();
@@ -103,6 +105,5 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
 
 app.Run();

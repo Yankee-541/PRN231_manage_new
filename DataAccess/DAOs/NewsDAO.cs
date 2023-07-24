@@ -122,7 +122,7 @@ namespace DataAccess.DAOs
             }).FirstOrDefaultAsync(n => n.Id == id);
         }
 
-        public async Task<int> CreateAsync(NewsDTO dto)
+        public async Task CreateAsync(NewsDTO dto)
         {
             var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
@@ -136,12 +136,12 @@ namespace DataAccess.DAOs
                     CreatedBy = dto.CreatedBy,
                     SubCategoryId = dto.SubCategoryId,
                     Status = 0,
+                    ImgPath = dto.ImgPath,
                     IsActive = true
                 };
-                var entity = await _dbContext.News.AddAsync(news);
+                await _dbContext.News.AddAsync(news);
                 await _dbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
-                return entity.Entity.Id;
             }
             catch (Exception)
             {

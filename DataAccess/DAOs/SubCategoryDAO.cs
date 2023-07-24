@@ -14,7 +14,7 @@ namespace DataAccess.DAOs
             _dbContext = dbContext;
         }
 
-        public async Task<List<SubCategoryDTO>> GetAllAsync()
+        public async Task<List<SubCategoryDTO>> GetAllAsync(int categoryId)
         {
             return await _dbContext.SubCategories.Select(sc =>
             new SubCategoryDTO
@@ -22,7 +22,7 @@ namespace DataAccess.DAOs
                 Id = sc.Id,
                 Name = sc.Name,
                 CategoryId = sc.CategoryId,
-            }).ToListAsync();
+            }).Where(x => x.CategoryId == categoryId).ToListAsync();
         }
 
         public async Task<SubCategoryDTO> GetSubCategoryByIDAsync(int id)

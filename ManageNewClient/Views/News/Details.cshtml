@@ -85,7 +85,7 @@
             console.log(articleId)
             // Make an AJAX GET request to fetch the article details
             $.ajax({
-                url: `https://localhost:7255/api/News/GetById/id?id=${articleId}`,
+                url: `https://localhost:7255/api/News/GetById/${articleId}`,
                 type: "GET",
                 dataType: "json",
                 success: function (data) {

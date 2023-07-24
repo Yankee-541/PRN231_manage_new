@@ -33,26 +33,17 @@ namespace ManageNewsApi.Controllers
             return await _newsBusiness.GetListNews(1, search);
         }
 
-		[HttpGet]
-		public async Task<List<NewsDTO>> NewsQueueAsync()
-		{
-			return await _newsBusiness.GetListNews(0, "");
-		}
-
-
-		[HttpGet]
-        [Route("id")]
+        [HttpGet]
+        [Route("{id}")]
         public async Task<NewsDTO> GetByIdAsync(int id)
         {
             return await _newsBusiness.GetByIdAsync(id);
         }
 
         [HttpPost]
-        public async Task CreateAsync([FromForm] NewsDTO dto, [FromForm] List<IFormFile> images)
+        public async Task CreateAsync(NewsDTO dto)
         {
-            dto.Id = await _newsBusiness.CreateAsync(dto);
-            dto.ImgPath = await SaveImage(dto.Id, images);
-            await _newsBusiness.EditAsync(dto);
+            await _newsBusiness.CreateAsync(dto);
         }
 
         [HttpGet]

@@ -1,9 +1,10 @@
 ﻿using BusinessLogic.DTO;
 using DataAccess.Interface;
+using Repositories.Interface;
 
 namespace Repositories.Business
 {
-    public class SubCategoryBusiness : ISubCategoryDAO
+    public class SubCategoryBusiness : ISubCategoryBusiness
     {
         private readonly ISubCategoryDAO _subCategoryDAO;
 
@@ -22,9 +23,9 @@ namespace Repositories.Business
             await _subCategoryDAO.DeleteSubCategoryAsync(id);
         }
 
-        public async Task<List<SubCategoryDTO>> GetAllAsync()
+        public async Task<List<SubCategoryDTO>> GetAllAsync(int categoryId)
         {
-            return await _subCategoryDAO.GetAllAsync();
+            return await _subCategoryDAO.GetAllAsync(categoryId);
         }
 
         public async Task<SubCategoryDTO> GetSubCategoryByIDAsync(int id)

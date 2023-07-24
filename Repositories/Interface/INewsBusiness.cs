@@ -13,5 +13,7 @@ namespace Repositories.Interface
         Task<int> CreateAsync(NewsDTO dto);
 
         Task EditAsync(NewsDTO dto);
+        Task DeleteAndRestoreAsync(int id, bool active);
+
     }
 }

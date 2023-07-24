@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.Business;
 using Repositories.Interface;
 using WebApiProject.Constants;
 
@@ -55,10 +56,10 @@ namespace ManageNewsApi.Controllers
             await _newsBusiness.EditAsync(dto);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("{id}")]
-        [Authorize(Policy = Roles.Reviewer)]
-        public async Task<IActionResult> EditStatusAsync(int id, int status)
+        //[Authorize(Policy = Roles.Reviewer)]
+        public async Task<IActionResult> EditStatusAsync(int id)
         {
             var userId = Int32.Parse(User.FindFirst("Id")?.Value);
             var news = await _newsBusiness.GetByIdAsync(id);
@@ -68,15 +69,38 @@ namespace ManageNewsApi.Controllers
                 return NoContent();
             }
 
-            news.Status = status;
-            if (status == 3)
-            {
-                news.PostedDate = DateTime.UtcNow.AddHours(7);
-            }
+            news.Status = 1;
+            news.PostedDate = DateTime.Now;
             news.ModifiedBy = userId;
             await _newsBusiness.EditAsync(news);
             return Ok();
         }
+
+        [HttpDelete]
+        //[Authorize(Policy = Roles.Reviewer)]
+        public async Task<IActionResult> ChangeStatusAsync(int id)
+        {
+            
+            var userId = Int32.Parse(User.FindFirst("Id")?.Value);
+            var news = await _newsBusiness.GetByIdAsync(id);
+
+            if (news == null)
+            {
+                return NotFound();
+            }
+            news.PostedDate = DateTime.Now;
+            news.Status = 1;
+            news.ModifiedBy = userId;
+            await _newsBusiness.EditAsync(news);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task DeleteAsync(int id)
+        {
+            await _newsBusiness.DeleteAndRestoreAsync(id, false);
+        }
+
 
         private async Task<string> SaveImage(int id, List<IFormFile> images)
         {

@@ -16,7 +16,7 @@ namespace DataAccess.DAOs
 
 		public async Task<List<NewsDTO>> GetListNews(int status)
 		{
-            var news =  _dbContext.News.Where(n=>n.Status==status).Select(n => new NewsDTO
+            var news =  _dbContext.News.Where(n=>n.Status==status && n.IsActive == true).Select(n => new NewsDTO
 			{
 				Id = n.Id,
 				Title = n.Title,
@@ -142,6 +142,23 @@ namespace DataAccess.DAOs
             {
                 await transaction.RollbackAsync();
                 throw;
+            }
+        }
+
+        public async Task DeleteAndRestoreAsync(int id, bool active)
+        {
+            var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
+            {
+                var news = await _dbContext.News.FirstOrDefaultAsync(x => x.Id == id);
+                news.IsActive = active;
+                _dbContext.Entry(news).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
             }
         }
     }

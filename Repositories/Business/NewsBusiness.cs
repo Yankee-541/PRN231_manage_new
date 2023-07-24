@@ -37,5 +37,10 @@ namespace Repositories.Business
 		{
 		 return	await _newsDAO.GetListNews(status);
 		}
-	}
+
+        public async Task DeleteAndRestoreAsync(int id, bool active)
+        {
+             await _newsDAO.DeleteAndRestoreAsync(id, active);
+        }
+    }
 }

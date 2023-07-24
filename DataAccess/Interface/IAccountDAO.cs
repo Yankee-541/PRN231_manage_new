@@ -1,4 +1,5 @@
-﻿using BusinessLogic.Models;
+﻿using BusinessLogic.DTO;
+using BusinessLogic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace DataAccess.Interface
 	public interface IAccountDAO
 	{
 		Task<User> GetAccountAsync(string? username, string? password, bool isActive);
+		Task<User> RegisterAsync(RegisterDTO account);
 	}
 }

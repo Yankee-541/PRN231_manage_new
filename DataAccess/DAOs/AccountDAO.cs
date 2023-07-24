@@ -1,4 +1,5 @@
-﻿using BusinessLogic.Models;
+﻿using BusinessLogic.DTO;
+using BusinessLogic.Models;
 using DataAccess.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DataAccess.DAOs
 {
@@ -29,5 +31,32 @@ namespace DataAccess.DAOs
 			return null;
 			
 		}
-	}
+
+        public async Task<User> RegisterAsync(RegisterDTO account)
+        {
+            var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
+            {
+                var news = new User
+                { 
+                    Username = account.Username,
+                    Password = account.Password,
+                    Name = account.Name,
+                    Dob = account.Dob,
+                    IsActive = true
+                };
+                var entity = await _dbContext.Users.AddAsync(news);
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return entity.Entity;
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+
+
+        }
+    }
 }

@@ -15,8 +15,13 @@ namespace ManageNewsClient.Controllers
 		{
 			return View();
 		}
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
 
-		[HttpPost]
+        [HttpPost]
 		public async Task<IActionResult> LoginAsync(LoginModelDTO model)
 		{
 			if (!ModelState.IsValid)
@@ -48,7 +53,35 @@ namespace ManageNewsClient.Controllers
 			return View(model);
 		}
 
-		private void KeepToken(string token)
+        [HttpPost]
+        public async Task<IActionResult> RegisterAsync(RegisterDTO model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            HttpResponseMessage responseMessage = await httpClient.PostAsJsonAsync(_url + "Register", model);
+
+            switch (responseMessage.StatusCode)
+            {
+                case System.Net.HttpStatusCode.OK:
+                    var response = await responseMessage.Content.ReadFromJsonAsync<LoginModelResponse>();
+                    KeepToken(response.Token);
+                    SetSession(response.userDTO);
+                    return Redirect("../Home");
+                case System.Net.HttpStatusCode.NotFound:
+                    ViewData["msg"] = "Username or password is in valid. Please try again!";
+                    return View(model);
+                case System.Net.HttpStatusCode.BadRequest:
+                    ViewData["msg"] = "Your account may have been locked !!!";
+                    return View(model);
+            }
+
+            return View(model);
+        }
+
+        private void KeepToken(string token)
 		{
 			HttpContext.Session.SetString("AccessToken", JsonSerializer.Serialize(token));
 		}

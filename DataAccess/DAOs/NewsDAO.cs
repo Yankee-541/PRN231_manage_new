@@ -3,6 +3,7 @@ using BusinessLogic.DTO;
 using BusinessLogic.Models;
 using DataAccess.Interface;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DataAccess.DAOs
 {
@@ -14,22 +15,48 @@ namespace DataAccess.DAOs
             _dbContext = dbContext;
 		}
 
-		public async Task<List<NewsDTO>> GetListNews(int status)
+		public async Task<List<NewsDTO>> GetListNews(int status, string? search)
 		{
-            var news =  _dbContext.News.Where(n=>n.Status==status && n.IsActive == true).Select(n => new NewsDTO
-			{
-				Id = n.Id,
-				Title = n.Title,
-				CategoryId = n.CategoryId,
-				Content = n.Content,
-				CreatedBy = n.CreatedBy,
-				ImgPath = n.ImgPath,
-				NumberOfLikes = n.NumberOfLikes,
-				PostedDate = n.PostedDate,
-				Status = n.Status,
-				SubCategoryId = n.SubCategoryId
-			}).ToListAsync();
-			return await news;
+
+            List<News> news;
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                news = await _dbContext.News.Where(n => n.Status == status && n.IsActive == true && n.Title.Contains(search)).ToListAsync();
+            }
+            else
+            {
+               news = await _dbContext.News.Where(n => n.Status == status && n.IsActive == true).ToListAsync();
+            }
+
+            NewsDTO newsDTO;
+            List< NewsDTO > newsDTOList = new List<NewsDTO>();
+            foreach (var item in news)
+            {
+                User author = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == item.CreatedBy);
+
+                newsDTO = new NewsDTO
+                {
+                    Id = item.Id,
+                    Title = item.Title,
+                    CategoryId = item.CategoryId,
+                    Content = item.Content,
+                    CreatedBy = item.CreatedBy,
+                    ImgPath = item.ImgPath,
+                    NumberOfLikes = item.NumberOfLikes,
+                    PostedDate = item.PostedDate,
+                    Status = item.Status,
+                    SubCategoryId = item.SubCategoryId,
+                    Created = author.Name,
+                    
+                };
+                newsDTOList.Add(newsDTO);
+            }
+
+            
+            
+
+            return newsDTOList;
 		}
 
 

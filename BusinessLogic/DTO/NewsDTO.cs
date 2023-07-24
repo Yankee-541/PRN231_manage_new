@@ -23,5 +23,7 @@
         public int? Status { get; set; }
 
         public int SubCategoryId { get; set; }
+        public string? Created { get; set; }
+
     }
 }

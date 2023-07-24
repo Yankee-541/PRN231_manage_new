@@ -34,5 +34,22 @@ namespace Repositories.Business
 
 			};
 		}
-	}
+
+        public async Task<AccountDTo> RegisterAsync(RegisterDTO accounts)
+        {
+            var account = await _accountDao.RegisterAsync(accounts);
+            if (account == null)
+            {
+                return null;
+            }
+
+            return new AccountDTo()
+            {
+                Id = account.Id,
+                Username = account.Username,
+                Name = account.Name,
+                Role = account.Role,
+            };
+        }
+    }
 }

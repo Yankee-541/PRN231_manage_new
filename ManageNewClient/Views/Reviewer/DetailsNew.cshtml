@@ -1,0 +1,141 @@
+﻿@{
+    ViewData["Title"] = "News Details";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    #title {
+        text-transform: capitalize;
+    }
+
+    #image {
+        width: 100%;
+        height: auto;
+    }
+
+    .wraper {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .wraper-title {
+        font-weight: 700;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .news-details {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .like-btn {
+        font-size: 24px;
+    }
+
+    .like-btn-color {
+        color: #0d6efd;
+    }
+
+    .comment {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+        .comment button {
+            margin-left: auto;
+        }
+</style>
+
+<div class="container">
+    <div class="news-details">
+        <h1 id="title"></h1>
+        <img id="image" src="" alt="News Image">
+        <div class="wraper">
+            <p class="wraper-title"> Category: </p>
+            <p id="category"></p>
+        </div>
+        <div class="wraper">
+            <p class="wraper-title"> Posted Date: </p>
+            <p id="postedDate"></p>
+        </div>
+        <div class="wraper">
+            <p class="wraper-title"> Created By: </p>
+            <p id="createdBy"></p>
+        </div>
+
+        <div class="wraper">
+            <p class="wraper-title">Content: </p>
+            <p id="content"></p>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: space-around;padding-top: 50px;" class="accpet">
+
+@*        <a href="@Url.Action("Accept", "Reviewer", new { id = @item.})" class="accpet">
+            <button style="width: 68px;height: 45px;">
+                Accept
+            </button>
+        </a>
+        <a href="@Url.Action("Bin", "Reviewer")">
+            <button style="width: 68px;height: 45px;">
+                Delete
+            </button>
+        </a>*@
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Function to fetch and display the details of a news article
+        function fetchNewsDetails() {
+            let params = (new URL(document.location)).searchParams;
+            let articleId = params.get("id");
+            $.ajax({
+                url: `https://localhost:7255/api/News/GetById/id?id=${articleId}`,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // Populate the HTML elements with the fetched data
+                    $("#title").text(data.title);
+                    $("#image").attr("src", data.imgPath);
+                    $("#category").text(data.categoryid);
+                    $("#postedDate").text(data.postedDate);
+                    $("#content").html(data.content);
+                    $("#createdBy").text(data.createdBy);
+
+                    var newsList = $(".accpet");
+                    var articleItem = `
+                                                    <a href=\"../Accept/?id=${data.id}">
+                                                        <button style="width: 68px;height: 45px;">Accept</button>
+                                                    </a>
+                                                    <a href=\"../Delete/?id=${data.id}">
+                                                        <button style="width: 68px;height: 45px;">Delete</button>
+                                                    </a>
+                                                    `;
+
+                     newsList.append(articleItem);
+                },
+                error: function (error) {
+                    console.error("Error fetching news article details:", error);
+                }
+            });
+        }
+
+        // Call the function to fetch and display news article details
+        fetchNewsDetails();
+
+        function myFunction(x) {
+            if (x.classList.contains("like-btn-color")) {
+                $("#like").text(parseInt($("#like").text()) - 1);
+            }
+            else {
+                $("#like").text(parseInt($("#like").text()) + 1);
+            };
+            x.classList.toggle("like-btn-color");
+        }
+    </script>
+}

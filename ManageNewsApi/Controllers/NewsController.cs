@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.Business;
 using Repositories.Interface;
 using WebApiProject.Constants;
 
@@ -33,7 +34,6 @@ namespace ManageNewsApi.Controllers
         }
 
 		[HttpGet]
-		//[Authorize(Policy = Roles.Reviewer)]
 		public async Task<List<NewsDTO>> NewsQueueAsync()
 		{
 			return await _newsBusiness.GetListNews(0);
@@ -55,28 +55,24 @@ namespace ManageNewsApi.Controllers
             await _newsBusiness.EditAsync(dto);
         }
 
-        [HttpPost]
-        [Route("{id}")]
-        [Authorize(Policy = Roles.Reviewer)]
-        public async Task<IActionResult> EditStatusAsync(int id, int status)
+        [HttpGet]
+        [Route("{id}/{reviewId}")]
+        public async Task<IActionResult> EditStatusAsync(int id, int reviewId)
         {
-            var userId = Int32.Parse(User.FindFirst("Id")?.Value);
             var news = await _newsBusiness.GetByIdAsync(id);
-
-            if (news.Status != 1)
-            {
-                return NoContent();
-            }
-
-            news.Status = status;
-            if (status == 3)
-            {
-                news.PostedDate = DateTime.UtcNow.AddHours(7);
-            }
-            news.ModifiedBy = userId;
+            news.Status = 1;
+            news.PostedDate = DateTime.Now;
+            news.ModifiedBy = reviewId;
             await _newsBusiness.EditAsync(news);
             return Ok();
         }
+
+        [HttpDelete]
+        public async Task DeleteAsync(int id)
+        {
+            await _newsBusiness.DeleteAndRestoreAsync(id, false);
+        }
+
 
         private async Task<string> SaveImage(int id, List<IFormFile> images)
         {

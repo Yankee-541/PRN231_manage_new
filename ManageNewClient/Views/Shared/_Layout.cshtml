@@ -25,9 +25,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li> 
+
+
+
                         @if (Context.Session.GetString("account") == null)
                         {
-                            <li class="nav-item" style="padding-left: 80%;">
+                            <li class="nav-item" style="padding-left: 70%;">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login" >Login</a>
                             </li>
                             <li class="nav-item">
@@ -36,13 +39,28 @@
                         }
                         else
                         {
-                            <li class="nav-item" style="padding-left: 80%;">
+
+                            @if (ViewBag.currentUser.Role == 4)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="./Reviewer/News">Review News queue</a>
+                                </li>
+                            }
+                            else if (ViewBag.currentUser.Role == 1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="./Admin/Index">Manager Users</a>
+                                </li>
+                            }
+                            
+                            <li class="nav-item" style="padding-left: 65%;">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="" >@ViewBag.account</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
                             </li>
                         }
+                        
                     </ul>
                 </div>
             </div>

@@ -4,7 +4,7 @@
 			{
 				pageCurrent = ViewBag.currentPage,
 				totalPages = ViewBag.TotalPage,
-				url = $"Queue?page="
+				url = $"News?page="
 			};
 }
 
@@ -13,11 +13,11 @@
 	<div style="display: flex; justify-content: space-between;">
 		<h2>News Queue</h2>
 
-@*		<a href="@Url.Action("Bin", "Admin")">
-			<button style="width: 68px;height: 45px;">
-				Bin
-			</button>
-		</a>*@
+		@*		<a href="@Url.Action("Bin", "Admin")">
+	<button style="width: 68px;height: 45px;">
+	Bin
+	</button>
+	</a>*@
 	</div>
 
 	<table class="table">
@@ -52,7 +52,7 @@
 						</th>
 
 						<th>
-							<a href="DetailsForReviewer/?id=@item.Id">Details</a>
+							<a href="DetailsNew/?id=@item.Id">Details</a>
 						</th>
 					</tr>
 

@@ -10,7 +10,7 @@ using WebApiProject.Constants;
 
 namespace ManageNewsApi.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/[controller]/[action]")]
 	[ApiController]
 	public class AuthController : ControllerBase
 	{
@@ -24,7 +24,6 @@ namespace ManageNewsApi.Controllers
 		}
 
 		[HttpPost]
-		[Route("Login")]
 		public async Task<IActionResult> LoginAsync([FromBody] LoginModelDTO account)
 		{
 			var response = await _authBusiness.GetAccountAsync(account.Username, account.Password, false);
@@ -38,17 +37,41 @@ namespace ManageNewsApi.Controllers
 				return BadRequest();
 			}
 
-			var token = GenerateToken(response);
+			var token = GenerateToken(response2);
 
 			var loginResponse = new LoginModelResponse()
 			{
-				userDTO = response,
+				userDTO = response2,
 				Token = token
 			};
 
 			return Ok(loginResponse);
 		}
-		private string GenerateToken(AccountDTo account)
+
+        [HttpPost]
+        public async Task<IActionResult> RegisterAsync([FromBody] RegisterDTO account)
+        {
+			var register = await _authBusiness.RegisterAsync(account);
+
+
+            //var response2 = await _authBusiness.GetAccountAsync(register.Username, register.Password, true);
+            //if (response2 == null)
+            //{
+            //    return BadRequest();
+            //}
+
+            var token = GenerateToken(register);
+
+            var loginResponse = new LoginModelResponse()
+            {
+                userDTO = register,
+                Token = token
+            };
+
+            return Ok(loginResponse);
+        }
+
+        private string GenerateToken(AccountDTo account)
 		{
 			var role = Roles.User;
 

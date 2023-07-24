@@ -2,6 +2,7 @@
 using ManageNewClient.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace ManageNewsClient.Controllers
 {
@@ -51,8 +52,9 @@ namespace ManageNewsClient.Controllers
                 return Redirect("../../Home");
             }
             ViewBag.currentUser = account;
+            var reviewId = account.Id;
 
-            HttpResponseMessage responseMessage = await httpClient.DeleteAsync(_urlNewQueue + $"EditStatus/{id}");
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(_urlNewQueue + $"EditStatus/{id}/{reviewId}");
             switch (responseMessage.StatusCode)
             {
                 case System.Net.HttpStatusCode.OK:

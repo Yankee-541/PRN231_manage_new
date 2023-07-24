@@ -34,7 +34,6 @@ namespace ManageNewsApi.Controllers
         }
 
 		[HttpGet]
-		//[Authorize(Policy = Roles.Reviewer)]
 		public async Task<List<NewsDTO>> NewsQueueAsync()
 		{
 			return await _newsBusiness.GetListNews(0);
@@ -56,41 +55,14 @@ namespace ManageNewsApi.Controllers
             await _newsBusiness.EditAsync(dto);
         }
 
-        [HttpDelete]
-        [Route("{id}")]
-        //[Authorize(Policy = Roles.Reviewer)]
-        public async Task<IActionResult> EditStatusAsync(int id)
+        [HttpGet]
+        [Route("{id}/{reviewId}")]
+        public async Task<IActionResult> EditStatusAsync(int id, int reviewId)
         {
-            var userId = Int32.Parse(User.FindFirst("Id")?.Value);
             var news = await _newsBusiness.GetByIdAsync(id);
-
-            if (news.Status != 1)
-            {
-                return NoContent();
-            }
-
             news.Status = 1;
             news.PostedDate = DateTime.Now;
-            news.ModifiedBy = userId;
-            await _newsBusiness.EditAsync(news);
-            return Ok();
-        }
-
-        [HttpDelete]
-        //[Authorize(Policy = Roles.Reviewer)]
-        public async Task<IActionResult> ChangeStatusAsync(int id)
-        {
-            
-            var userId = Int32.Parse(User.FindFirst("Id")?.Value);
-            var news = await _newsBusiness.GetByIdAsync(id);
-
-            if (news == null)
-            {
-                return NotFound();
-            }
-            news.PostedDate = DateTime.Now;
-            news.Status = 1;
-            news.ModifiedBy = userId;
+            news.ModifiedBy = reviewId;
             await _newsBusiness.EditAsync(news);
             return Ok();
         }

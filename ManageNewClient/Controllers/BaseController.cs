@@ -23,7 +23,7 @@ namespace ManageNewClient.Controllers
             HttpContext.Session.SetString("account", JsonSerializer.Serialize(account));
         }
 
-        protected AccountDTo GetSession()
+        protected UserDTO GetSession()
         {
             string accountValue = HttpContext.Session.GetString("account");
             if ( accountValue == null)
@@ -31,7 +31,7 @@ namespace ManageNewClient.Controllers
                 return null;
             }
 
-            var account = JsonSerializer.Deserialize<AccountDTo>(accountValue);
+            var account = JsonSerializer.Deserialize<UserDTO>(accountValue);
             ViewBag.account = account.Username;
             return account;
         }

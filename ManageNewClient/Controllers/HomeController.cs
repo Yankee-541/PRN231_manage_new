@@ -11,14 +11,8 @@ namespace ManageNewClient.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			//ViewBag.LeftMenu = true;
-			var account = GetSession();
-            //ViewBag.account = account.Name;
-            
-            //if (account == null)
-            //{
-            //	return Redirect("../Auth/Login");
-            //}
+            var account = GetSession();
+            ViewBag.currentUser = account;
             return View();
 		}
 

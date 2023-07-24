@@ -109,6 +109,7 @@ namespace DataAccess.DAOs
                     CreatedBy = dto.CreatedBy,
                     SubCategoryId = dto.SubCategoryId,
                     Status = 0,
+                    IsActive = true
                 };
                 var entity = await _dbContext.News.AddAsync(news);
                 await _dbContext.SaveChangesAsync();

@@ -8,7 +8,7 @@ namespace DataAccess.Interface
         Task<List<NewsDTO>> GetListNews(int status, string? search);
 		Task<NewsDTO> GetByIdAsync(int id);
 
-        Task<int> CreateAsync(NewsDTO dto);
+        Task CreateAsync(NewsDTO dto);
 
         Task EditAsync(NewsDTO dto);
         Task DeleteAndRestoreAsync(int id, bool active);

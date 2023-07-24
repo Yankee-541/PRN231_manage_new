@@ -23,9 +23,9 @@ namespace Repositories.Business
             return await _newsDAO.GetByIdAsync(id);
         }
 
-        public async Task<int> CreateAsync(NewsDTO dto)
+        public async Task CreateAsync(NewsDTO dto)
         {
-            return await _newsDAO.CreateAsync(dto);
+            await _newsDAO.CreateAsync(dto);
         }
 
         public async Task EditAsync(NewsDTO dto)

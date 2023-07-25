@@ -112,7 +112,7 @@ namespace DataAccess.DAOs
 
         public async Task<NewsDTO> GetByIdAsync(int id)
         {
-            return await _dbContext.News.Select(n =>
+            return await _dbContext.News.Include(x => x.CreatedByNavigation).Select(n =>
             new NewsDTO
             {
                 Id = n.Id,
@@ -124,7 +124,8 @@ namespace DataAccess.DAOs
                 NumberOfLikes = n.NumberOfLikes,
                 PostedDate = n.PostedDate,
                 Status = n.Status,
-                SubCategoryId = n.SubCategoryId
+                SubCategoryId = n.SubCategoryId,
+                Created = n.CreatedByNavigation.Name
             }).FirstOrDefaultAsync(n => n.Id == id);
         }
 

@@ -95,7 +95,7 @@
             let params = (new URL(document.location)).searchParams;
             let articleId = params.get("id");
             $.ajax({
-                url: `https://localhost:7255/api/News/GetById/id?id=${articleId}`,
+                url: `https://localhost:7255/api/News/GetById/${articleId}`,
                 type: "GET",
                 dataType: "json",
                 success: function (data) {

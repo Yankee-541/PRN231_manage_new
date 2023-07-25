@@ -28,6 +28,12 @@ namespace ManageNewsApi.Controllers
         }
 
         [HttpGet]
+        public async Task<List<NewsDTO>> NewsQueueAsync()
+        {
+            return await _newsBusiness.GetListNews(0, "");
+        }
+
+        [HttpGet]
         public async Task<List<NewsDTO>> GetListNews(string? search)
         {
             return await _newsBusiness.GetListNews(1, search);

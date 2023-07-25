@@ -125,12 +125,16 @@
                     console.log('Error fetching categories: ' + error);
                 }
             });
-            fetchNewsArticles();
+            fetchNewsArticles("");
 
-            function fetchNewsArticles() {
+            $('#searchButton').click(function () {
+                fetchNewsArticles($('#searchInput').val());
+            })
+
+            function fetchNewsArticles(search) {
                 $(".news-list").html("");
                 $.ajax({
-                    url: "https://localhost:7255/api/News/GetListNews",
+                    url: "https://localhost:7255/api/News/GetListNews?search=" + search,
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",

@@ -1,14 +1,89 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Home Page";
 }
 <style>
     ul {
         list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 0px;
+        align-items: flex-start;
+    }
+
+    .banner img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    .news-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .row {
+        margin-top: 24px;
+    }
+
+    .news-image img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .category-list {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .navbar {
+        position: sticky;
+        background: white;
+        top: 0;
+        gap: 24px;
+    }
+
+    a {
+        color: #000000;
+        text-decoration: none;
+        text-transform: capitalize;
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+        .search-bar input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-bar button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .search-bar button:hover {
+                background-color: #45a049;
+            }
+
+    .news-item a {
+        display: flex;
+        gap: 16px;
     }
 </style>
 <div class="container">
     <div class="row">
-        <div class="col-lg-8">
+        <div>
             <!-- News Articles Section -->
             <div class="news-section">
                 <ul class="news-list">
@@ -16,14 +91,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-lg-4">
-            <!-- Sidebar Section (e.g., featured news, ads, etc.) -->
-            <div class="sidebar">
-                <ul class="news-list">
-                    <!-- Articles will be dynamically added here -->
-                </ul>
-            </div>
-        </div>
+
     </div>
 </div>
 
@@ -31,33 +99,32 @@
     <script type="text/javascript">
         $(document).ready(function () {
             fetchNewsArticles();
+
             let params = (new URL(document.location)).searchParams;
             let categoryId = params.get("id");
             function fetchNewsArticles() {
                 $(".news-list").html("");
                 $.ajax({
-                    url: "https://localhost:7255/api/News/GetListNews",
+                    url: "https://localhost:7255/api/News/GetListNews?categoryId=" + categoryId,
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result, status, xhr) {
                         var newsList = $(".news-list");
                         result.forEach(function (article) {
-                            console.log(article)
-                            var articleItem = `
-                                                        <li class="news-item">
-                                                            <a href=\"News/Details/?id=${article.id}">
-                                                                <div class="news-image">
-                                                                    <img src="${article.imgPath}" alt="${article.title}" />
-                                                                </div>
-                                                                <div class="news-content">
-                                                                    <h3 class="news-title">${article.title}</h3>
-                                                                    <p class="news-excerpt">${article.content}</p>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                    `;
 
+                            var articleItem = `
+                                                                                <li class="news-item">
+                                                                                   <a href=\"News/Details/?id=${article.id}">
+                                                                                        <div class="news-image">
+                                                                                            <img src="${article.imgPath}" />
+                                                                                        </div>
+                                                                                        <div class="news-content">
+                                                                                            <h5 class="news-title">${article.title}</h3>
+                                                                                        </div>
+                                                                                    </a>
+                                                                                </li>
+                                                                            `;
                             newsList.append(articleItem);
                         });
                     },

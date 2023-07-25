@@ -33,9 +33,9 @@ namespace Repositories.Business
             await _newsDAO.EditAsync(dto);
         }
 
-		public async Task<List<NewsDTO>> GetListNews(int status, string? search)
+		public async Task<List<NewsDTO>> GetListNews(int status, string? search, int categoryId)
 		{
-		 return	await _newsDAO.GetListNews(status, search);
+		 return	await _newsDAO.GetListNews(status, search, categoryId);
 		}
 
         public async Task DeleteAndRestoreAsync(int id, bool active)

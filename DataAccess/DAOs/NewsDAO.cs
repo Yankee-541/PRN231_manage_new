@@ -15,14 +15,20 @@ namespace DataAccess.DAOs
             _dbContext = dbContext;
 		}
 
-		public async Task<List<NewsDTO>> GetListNews(int status, string? search)
+		public async Task<List<NewsDTO>> GetListNews(int status, string? search, int categoryId)
 		{
 
             List<News> news;
 
-            if (!string.IsNullOrEmpty(search))
+            if (!string.IsNullOrEmpty(search) && categoryId == null)
             {
                 news = await _dbContext.News.Where(n => n.Status == status && n.IsActive == true && n.Title.Contains(search)).ToListAsync();
+            }else if(string.IsNullOrEmpty(search) && categoryId != null)
+            {
+                news = await _dbContext.News.Where(n => n.Status == status && n.IsActive == true && n.CategoryId == categoryId).ToListAsync();
+            }else if (!string.IsNullOrEmpty(search) && categoryId != null)
+            {
+                news = await _dbContext.News.Where(n => n.Status == status && n.IsActive == true && n.CategoryId == categoryId && n.Title.Contains(search)).ToListAsync();
             }
             else
             {

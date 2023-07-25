@@ -6,7 +6,7 @@ namespace Repositories.Interface
     {
         Task<List<NewsDTO>> SearchAsync(SearchModel searchModel);
 
-        Task<List<NewsDTO>> GetListNews(int status,string? search);
+        Task<List<NewsDTO>> GetListNews(int status,string? search, int categoryId);
 
         Task<NewsDTO> GetByIdAsync(int id);
 

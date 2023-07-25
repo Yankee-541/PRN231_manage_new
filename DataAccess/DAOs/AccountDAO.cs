@@ -43,7 +43,9 @@ namespace DataAccess.DAOs
                     Password = account.Password,
                     Name = account.Name,
                     Dob = account.Dob,
-                    IsActive = true
+                    IsActive = true,
+                    Role = 2
+                    
                 };
                 var entity = await _dbContext.Users.AddAsync(news);
                 await _dbContext.SaveChangesAsync();

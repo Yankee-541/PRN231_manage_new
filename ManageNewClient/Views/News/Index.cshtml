@@ -99,10 +99,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             fetchNewsArticles();
-
-            let params = (new URL(document.location)).searchParams;
-            let categoryId = params.get("id");
             function fetchNewsArticles() {
+                let params = (new URL(document.location)).searchParams;
+                let categoryId = params.get("categoryId");
                 $(".news-list").html("");
                 $.ajax({
                     url: "https://localhost:7255/api/News/GetListNews?categoryId=" + categoryId,
@@ -112,12 +111,13 @@
                     success: function (result, status, xhr) {
                         var newsList = $(".news-list");
                         result.forEach(function (article) {
+                            var articleImage = `https://localhost:7256/${article.imgPath}`;
 
                             var articleItem = `
                                                                                 <li class="news-item">
                                                                                    <a href=\"News/Details/?id=${article.id}">
                                                                                         <div class="news-image">
-                                                                                            <img src="${article.imgPath}" />
+                                                                                                    <img src="${articleImage}" />
                                                                                         </div>
                                                                                         <div class="news-content">
                                                                                             <h5 class="news-title">${article.title}</h3>

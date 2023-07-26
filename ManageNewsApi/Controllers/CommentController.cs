@@ -16,10 +16,8 @@ namespace ManageNewsApi.Controllers
         }
 
         [HttpPost]
-        public async Task CreateAsync([FromBody] CommenDTO dto)
+        public async Task CreateAsync(CommenDTO dto)
         {
-            var userId = Int32.Parse(User.FindFirst("Id")?.Value);
-            dto.CreatedBy = userId;
             await _cmtBusiness.CreateCmt(dto);
         }
 

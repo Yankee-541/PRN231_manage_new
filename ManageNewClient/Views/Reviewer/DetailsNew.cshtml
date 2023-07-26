@@ -100,12 +100,13 @@
                 dataType: "json",
                 success: function (data) {
                     // Populate the HTML elements with the fetched data
+                    var articleImage = `https://localhost:7256/${data.imgPath}`;
                     $("#title").text(data.title);
-                    $("#image").attr("src", data.imgPath);
+                    $("#image").attr("src", articleImage);
                     $("#category").text(data.categoryid);
                     $("#postedDate").text(data.postedDate);
                     $("#content").html(data.content);
-                    $("#createdBy").text(data.createdBy);
+                    $("#createdBy").text(data.created);
 
                     var newsList = $(".accpet");
                     var articleItem = `

@@ -192,11 +192,11 @@
                 data: JSON.stringify(commentData),
                 success: function (data) {
                     // Comment submitted successfully, update the comments section
-                    fetchComments();
+ 
+                    location.reload();
                 },
                 error: function (error) {
-                    console.error("Error submitting comment:", error);
-                    alert("Failed to submit the comment. Please try again later.");
+                    location.reload();
                 }
             });
         }

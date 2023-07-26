@@ -18,11 +18,11 @@
         align-items: center;
     }
 
-    .wraper-title{
-        font-weight:700;
+    .wraper-title {
+        font-weight: 700;
     }
-    
-    p{
+
+    p {
         margin: 0;
     }
 
@@ -32,23 +32,23 @@
         gap: 16px;
     }
 
-    .like-btn{
+    .like-btn {
         font-size: 24px;
     }
 
-    .like-btn-color{
+    .like-btn-color {
         color: #0d6efd;
     }
 
     .comments-section {
-        display:flex;
-        flex-direction:column;
-        gap:8px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
         .comments-section button {
-        margin-left: auto;
-    }
+            margin-left: auto;
+        }
 </style>
 
 <div class="container">
@@ -94,7 +94,7 @@
                     $("#image").attr("src", data.imgPath);
                     $("#postedDate").text(data.postedDate);
                     $("#content").html(data.content);
-                    $("#createdBy").text( data.createdBy);
+                    $("#createdBy").text(data.createdBy);
                     $("#like").text(data.numberOfLikes);
                 },
                 error: function (error) {
@@ -117,12 +117,12 @@
                     data.forEach(comment => {
                         const createDate = new Date(comment.createDate).toLocaleString();
                         commentsHtml += `
-                                    <div class="comment-item">
-                                        <p><strong>${comment.username}</strong></p>
-                                        <p>${createDate}</p>
-                                        <p>${comment.content}</p>
-                                    </div>
-                                `;
+                                                            <div class="comment-item">
+                                                                <p><strong>${comment.name}</strong></p>
+                                                                <p>${createDate}</p>
+                                                                <p>${comment.content}</p>
+                                                            </div>
+                                                        `;
                     });
                     $("#comments").html(commentsHtml);
                 },
@@ -137,12 +137,10 @@
         fetchComments();
 
         function myFunction(x) {
-            if (x.classList.contains("like-btn-color"))
-            {
+            if (x.classList.contains("like-btn-color")) {
                 $("#like").text(parseInt($("#like").text()) - 1);
             }
-            else 
-            {
+            else {
                 $("#like").text(parseInt($("#like").text()) + 1);
             };
             x.classList.toggle("like-btn-color");

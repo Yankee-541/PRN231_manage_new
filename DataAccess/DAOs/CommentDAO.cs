@@ -44,7 +44,7 @@ namespace DataAccess.DAOs
         {
             return await _dbContext.Comments.Include(x => x.CreatedByNavigation).Select(u => new CommenDTO
             {
-                Username = u.CreatedByNavigation.Name,
+                Name = u.CreatedByNavigation.Name,
                 Content = u.Content,
                 CreateDate = u.CreateDate,
                 NewsId = u.NewsId,

@@ -20,13 +20,13 @@ namespace DataAccess.DAOs
 
             List<News> news;
 
-            if (!string.IsNullOrEmpty(search) && categoryId == null)
+            if (!string.IsNullOrEmpty(search) && categoryId == 0)
             {
                 news = await _dbContext.News.Where(n => n.Status == status && n.IsActive == true && n.Title.Contains(search)).ToListAsync();
-            }else if(string.IsNullOrEmpty(search) && categoryId != null)
+            }else if(string.IsNullOrEmpty(search) && categoryId != 0)
             {
                 news = await _dbContext.News.Where(n => n.Status == status && n.IsActive == true && n.CategoryId == categoryId).ToListAsync();
-            }else if (!string.IsNullOrEmpty(search) && categoryId != null)
+            }else if (!string.IsNullOrEmpty(search) && categoryId != 0)
             {
                 news = await _dbContext.News.Where(n => n.Status == status && n.IsActive == true && n.CategoryId == categoryId && n.Title.Contains(search)).ToListAsync();
             }
